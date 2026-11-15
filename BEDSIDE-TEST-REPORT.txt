@@ -1,0 +1,26 @@
+Bennet: 30 s caps + bedside demo test report (Nov 15, 2026)
+
+Automated (Linux workspace)
+  tsc --noEmit: clean | expo lint: clean | vitest: 49/49 passed
+  - src/demo/__tests__/bedside.test.ts (7): 30 s length, nothing shown while settling, pulse only in Propped up,
+    deterministic and in a calm range, no extrapolation past 30 s, finite and smooth traces (covers the phase fix)
+  - src/signal/__tests__/pulse.test.ts: depth estimator with the 20 s window, 12/15/20 per min recovered,
+    still acquiring at 16 s, flat trace rejected, mid-window body shift rejected (large_movement)
+  - src/sensors/__tests__/limits.test.ts (3): all caps 30 s, each estimator window leaves >= 5 s headroom
+  - src/sensors/__tests__/startGate.test.ts (4): unchanged stale-start lifecycle tests
+
+Browser checks (Expo web export of this source, 390x844, served locally)
+  PASS live home: On the nightstand / Propped up, facing you / In your hand groups with honest captions
+  PASS demo mode: Bedside demo card with Nightstand and Propped up entries, SIMULATED DATA badge
+  PASS Propped up: start, countdown, breathing + face pulse each tagged SIMULATED, completed at ~30 s,
+       summary (breathing 14/min range 13-15, pulse 64 BPM range 62-66, all SIMULATED)
+  PASS Nightstand: breathing only (no pulse element found), Stop -> "Demo stopped ... Nothing was measured or saved."
+  PASS Replay restarts at 30 s with "Settling..."; leaving the screen mid-run returns to Monitor, reopening shows setup
+  PASS "Try the test-alert check-in" opens Check-in in DEMONSTRATION MODE
+  PASS How it works shows the 30-second experiments, the bedside demo section and the overnight caveat
+  PASS bedside.tsx and demo/bedside.ts import nothing from the sensor module; no permission prompt appeared
+  FIXED during checks: the breathing trace glitched in the first seconds (negative-time phase); now wrapped correctly
+
+Not verified
+  No iOS build was made from this source; background (AppState) stop was checked only in code, not on a device.
+  SensorEngine.swift changed only maxSessionSeconds 60 -> 30 since EAS build5. Not hardware-verified.

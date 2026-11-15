@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Bennet",
+    "slug": "nightsignal",
+    "scheme": "nightsignal",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#081718",
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "ai.nightsignal.prototype",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Bennet uses the camera only while an experiment is open on screen, to estimate pulse from colour changes or measure chest movement. Frames are processed on this iPhone and never uploaded.",
+        "NSMicrophoneUsageDescription": "Bennet shows the live microphone level while the Sound experiment is open. Audio is not recorded, stored or uploaded.",
+        "NSMotionUsageDescription": "Bennet checks for phone movement so it can suppress pulse estimates while the phone is moving.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "16.4"
+          }
+        }
+      ]
+    ],
+    "owner": "jacklias",
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "1b8b54b3-cd6d-4ba9-9854-cf255dbe881c"
+      }
+    }
+  }
+}

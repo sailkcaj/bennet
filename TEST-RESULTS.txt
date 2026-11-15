@@ -1,0 +1,65 @@
+CURRENT SOURCE — Bennet 30-second bedside demo (15 Nov 2026)
+
+Capy source archive SHA256: 7cf369b5bbdd1ed8accb2e7a13b0e17720a3cae4ff90a6af7cf2ef9758e1a310
+Independent final local checks: typecheck PASS; lint PASS; 49 tests PASS (6 files).
+Native SensorEngine.swift syntax parse PASS; this is not a full iPhone compile.
+Capy Expo web checks: nightstand/propped-up modes, 30-second completion, stop,
+replay, navigation reset and test-alert link PASS. See BEDSIDE-TEST-REPORT.txt.
+Simulated demo readings are labelled and do not use sensors.
+Real audio measures sound level only; it does not record or classify breathing.
+Live sessions stop after 30 seconds; overnight/background monitoring is not implemented.
+
+iPhone EAS build 6 FINISHED successfully at 2026-11-15T21:59:03.268Z.
+Build ID: 6441a586-44b5-49c2-85a7-d6dac20ef7ca
+Install: https://expo.dev/accounts/jacklias/projects/nightsignal/builds/6441a586-44b5-49c2-85a7-d6dac20ef7ca
+EAS confirms device-internal distribution, physical iOS (not simulator), app 0.1.0,
+build 6 and bundle ai.nightsignal.prototype. Existing signing profile was reused.
+Uploaded with explicit user approval on 15 Nov 2026.
+Artifact download from this automation received HTTP 403, so the IPA was not
+independently inspected; successful compile/sign/package is based on EAS status.
+No new native Revyl verification, phone installation or physical sensor test for this version.
+All entries below are HISTORICAL; earlier references to FINAL refer to those older sources.
+
+----- HISTORICAL CHECKS -----
+
+Local checks (npx tsc --noEmit; npx eslint .; npx vitest run):
+ ✓ convex/lib/demoMachine.test.ts (6 tests)
+ ✓ src/signal/__tests__/pulse.test.ts (17 tests)   synthetic seeded signals, not recordings
+ ✓ convex/demo.test.ts (8 tests)                    convex-test: transitions + token authorization
+      Tests  31 passed (31)
+
+Revyl builds:
+ iOS Simulator Release (JS bundled, ad-hoc signed), verified on Revyl cloud iPhone 16 simulator:
+   01M7G96E3C60B81GFRAMG9WGDB  onboarding, modes, unavailable hardware, demo alert cancel/expiry/acknowledge, history, relaunch
+   01M7G9HDWJPJ6ENQWR9P2XPNE5  + microphone capture start/stop and background pause
+   01M7G9SE2W4H44CW4C4N7HMN8J  FINAL (matches this source): mic start/stop clears the level display
+ iphoneos Release compile check: 01M7GAEMHQAN579B05ZN1V1JMK  SUCCEEDED
+   arm64, main.jsbundle embedded, DTPlatformName=iphoneos, code signing DISABLED -> NOT installable
+
+Redesign (Nov 15): typecheck + eslint clean, 31/31 tests, Metro iOS bundle OK (re-run after final style fixes: same).
+ Revyl 01M7GE9XWGD8G11478M20YZSNS: FAILED before compiling (npm ci network ETIMEDOUT on runner); scripts now retry npm ci.
+ Revyl 01M7GEBJX5A8HQ1YR6T56788MZ: cancelled (superseded by finishing fixes).
+ Revyl 01M7GEF01RZ9D00347N176Z5RR: SUCCEEDED (source = archive 41691725...). FULL-FLOW verification on Revyl cloud
+   iPhone 16 simulator: onboarding -> Monitor, Live/Demo switch, 4 sensor tiles (fingertip/face/depth Unavailable on
+   simulator), Device & permissions expand, Face Start -> honest "Front camera not available", Sound Start -> capturing
+   (-120 dBFS, small unit) -> background -> "Interrupted - paused" with reading cleared, Check-in session, 10 s test
+   alert ring -> I'm okay cancel, simulated distress -> expired unacknowledged -> acknowledged, History timeline,
+   History persisted after relaunch, How it works guide. Found 2 cosmetic issues (tile chip mid-word wrap; card
+   buttons not full width).
+ Final small style fixes (tile chips single-line with shrink; full-width card buttons; plain cloud-unavailable copy):
+   Revyl 01M7GEZZKTPTSYFG0X36CVQY7X - focused visual check of affected screens only (see report).
+
+Physical iPhone (owner-run EAS device-internal): build 1 ddf1550b-18fb-40fe-9b9b-51c0a5a25cf3 (pre-redesign);
+ build 2 ef1a0a76-b8d5-4ad2-8c36-fdb856982aa7 (redesign archive 41691725...). Build 3 = this archive.
+
+Not yet done: physical-iPhone sensor validation, Convex deploy.
+
+--- Fingertip flash + 60 s cap + cancellation-race fix (Nov 15, 2026) ---
+tsc --noEmit: clean | expo lint: clean | vitest: 38/38 passed
+  new: src/sensors/__tests__/startGate.test.ts (4 deferred-start lifecycle tests), src/sensors/__tests__/limits.test.ts (3)
+SensorEngine.swift torch/session/ticket changes: NOT compiled yet (your EAS build compiles them). NOT verified on a physical iPhone.
+
+--- 30 s caps + bedside demo (Nov 15, 2026), on top of 403b5d (EAS build5) ---
+tsc --noEmit: clean | expo lint: clean | vitest: 48/48 passed
+  new/changed: src/demo/__tests__/bedside.test.ts (6), depth short-window tests in src/signal/__tests__/pulse.test.ts (+4), limits.test.ts (3, now 30 s + window headroom)
+SensorEngine.swift: only maxSessionSeconds 60 -> 30 changed since build5. Not compiled yet (EAS build6). Not hardware-verified.

@@ -1,0 +1,11 @@
+Commands run (Linux workspace):
+  npx create-expo-app@latest --template blank-typescript
+  npx expo install expo-router react-native-screens react-native-safe-area-context expo-linking expo-constants expo-secure-store expo-crypto expo-file-system react-native-svg expo-haptics @react-native-async-storage/async-storage expo-build-properties react-dom
+  npm install convex@1.50.0 --save-exact ; npm install -D vitest convex-test @edge-runtime/vm
+  npx convex ai-files install            (per https://www.convex.dev/agent-setup.md)
+  node scripts/convex-offline-codegen.cjs (no deployment available; stands in for 'npx convex dev' codegen)
+  npx tsc --noEmit ; npx eslint . ; npx vitest run   -> 31/31 tests pass
+  EXPO_PUBLIC_CONVEX_URL=https://kindly-retriever-868.convex.cloud npx expo export --platform ios  (Metro bundle check)
+Revyl remote macOS runner (Xcode 27):
+  bash scripts/revyl-ios-sim-build.sh   (npm ci, expo prebuild --clean, pod install, xcodebuild Release iphonesimulator, ad-hoc signed)
+NOT run (needs authorization): npx convex deploy

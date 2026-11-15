@@ -1,0 +1,33 @@
+{
+  "cli": {
+    "version": ">= 19.1.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "base": {
+      "node": "22.12.0",
+      "env": {
+        "EXPO_PUBLIC_CONVEX_URL": "https://kindly-retriever-868.convex.cloud"
+      }
+    },
+    "device-internal": {
+      "extends": "base",
+      "distribution": "internal",
+      "ios": {
+        "simulator": false,
+        "buildConfiguration": "Release",
+        "resourceClass": "m-medium"
+      },
+      "autoIncrement": true
+    },
+    "simulator": {
+      "extends": "base",
+      "distribution": "internal",
+      "ios": {
+        "simulator": true,
+        "buildConfiguration": "Release"
+      }
+    }
+  },
+  "submit": {}
+}
