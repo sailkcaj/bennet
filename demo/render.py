@@ -8,7 +8,7 @@ DEMO=Path(__file__).resolve().parent
 ROOT=DEMO/'.cache'; ROOT.mkdir(exist_ok=True)
 SOURCE=ROOT/'frames'
 OUT=DEMO/'Bennet-demo.mp4'
-W,H,FPS,DURATION=1920,1080,30,56
+W,H,FPS,DURATION=1920,1080,30,66
 BG='#081817'; SURF='#112724'; EDGE='#29433c'; WHITE='#f2f5ed'
 MUTED='#a0b7aa'; MINT='#b8eed0'; AMBER='#f2c584'; CORAL='#f6a995'
 FONT=next((p for p in [
@@ -225,8 +225,33 @@ def helper(t):
     footer(d,'Demo flow only. Notification, distance and map are simulated; no real person is contacted.')
     return im
 
+def payment(t):
+    im=Image.new('RGB',(W,H),BG);d=ImageDraw.Draw(im)
+    brand(d,'CHECK-IN COMPLETE',t)
+    rr(d,(420,145,1500,993),'#102923',36,'#37594a',2)
+    # This is the staged scenario's closing payment prompt, not a live checkout.
+    elapsed=max(0,t-56)
+    radius=56+min(1,elapsed/.6)*8
+    circle(d,960,253,radius,'#203e30')
+    circle(d,960,253,43,MINT)
+    d.line([(940,252),(954,266),(981,237)],fill='#173a29',width=7,joint='curve')
+    center(d,336,'You were saved',72,WHITE,True)
+    center(d,424,'by Bennet.',72,MINT,True)
+    center(d,532,'A nearby helper reached you.',26,MUTED)
+    rr(d,(540,605,1380,931),'#17352b',24,'#365447',1)
+    text(d,(577,632),'ONE-TIME PAYMENT',18,MUTED,True)
+    text(d,(577,670),'$20',86,WHITE,True)
+    text(d,(766,725),'USD',22,MUTED,True)
+    text(d,(1082,663),'Checkout with',19,MUTED)
+    text(d,(1134,692),'whop',42,WHITE,True)
+    rr(d,(576,806,1344,896),'#ff6243',20)
+    center(d,827,'Pay $20 with Whop',31,'#ffffff',True)
+    arrow(d,(1284,851),(1305,851),'#ffffff',3)
+    footer(d,'SIMULATED RESCUE · Payment screen preview only. No medical diagnosis or live transaction.')
+    return im
+
 def frame(t):
-    return monitor(t) if t<12 else alarm(t) if t<42 else helper(t)
+    return monitor(t) if t<12 else alarm(t) if t<42 else helper(t) if t<56 else payment(t)
 
 def make_audio():
     sr=48000
@@ -246,7 +271,7 @@ def make_audio():
         f.setnchannels(1);f.setsampwidth(2);f.setframerate(sr);f.writeframes((a*32767).astype('<i2').tobytes())
 
 if __name__=='__main__':
-    for t in [2,7,10,12,27,41,44,50]:frame(t).save(ROOT/f'preview-{t}.png')
+    for t in [2,7,10,12,27,41,44,50,56,60,65]:frame(t).save(ROOT/f'preview-{t}.png')
     if '--preview' in sys.argv:sys.exit(0)
     make_audio()
     cmd=['ffmpeg','-hide_banner','-loglevel','error','-y','-f','rawvideo','-vcodec','rawvideo','-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','-','-i',str(ROOT/'alarm.wav'),'-map','0:v:0','-map','1:a:0','-c:v','libx264','-threads','4','-preset','fast','-crf','20','-pix_fmt','yuv420p','-c:a','aac','-b:a','160k','-t',str(DURATION),'-movflags','+faststart',str(OUT)]

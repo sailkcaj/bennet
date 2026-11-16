@@ -13,12 +13,12 @@ Stack: Expo SDK 58 + Expo Router + TypeScript (repository root), an Expo local S
 - `src/`, `modules/`, `assets/`: the Bennet mobile app and native iPhone sensors.
 - `convex/`: backend source, generated bindings, and backend tests.
 - `scripts/`, `eas.json`, `app.json`: build and deployment configuration.
-- [`demo/Bennet-demo.mp4`](demo/Bennet-demo.mp4): latest 56-second presentation demo, including the labelled face regions, audible cancellation countdown, and simulated nearby-helper notification/map.
+- [`demo/Bennet-demo.mp4`](demo/Bennet-demo.mp4): latest 66-second presentation demo, including the labelled face regions, audible cancellation countdown, simulated nearby-helper notification/map, and a closing $20 Whop payment prompt.
 - [`demo/`](demo/README.md): the portable Python renderer, requirements, and the two original video clips needed to reproduce it.
 - `docs/previews/`: app previews from development.
 - `TEST-RESULTS.txt`, `BEDSIDE-TEST-REPORT.txt`: current and historical verification records.
 
-The presentation video's nearby-helper push notification and route are **not implemented in the installed app**. Convex still needs deployment, and live nearby-user discovery, location consent, push delivery, and responder routing remain future work. The demo renderer was created separately from the Capy-authored mobile app.
+The presentation video's nearby-helper push notification, route, and closing Whop payment prompt are **not implemented in the installed app**. The Whop screen is a design preview with no live checkout or charge. Convex still needs deployment, and live nearby-user discovery, location consent, push delivery, and responder routing remain future work. The demo renderer was created separately from the Capy-authored mobile app.
 
 ## How sponsor tools were used
 

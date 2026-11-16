@@ -1,6 +1,6 @@
 # Bennet presentation demo
 
-[Watch the latest 56-second demo](Bennet-demo.mp4).
+[Watch the latest 66-second demo](Bennet-demo.mp4).
 
 This is a rendered presentation video, separate from the installed Expo app. The labelled facial boxes, pulse and breathing readings, alarm scenario, nearby helper, 30 m distance, notification, and map are illustrative. No real person receives an alert. The face boxes are hand-keyframed to the camera movement; they do not detect a pulse or diagnose a medical event.
 
@@ -13,6 +13,9 @@ This is a rendered presentation video, separate from the installed Expo app. The
 | 12–42 s | Full-screen check-in alarm, generated beeps, real 30-second cancellation countdown |
 | 42–47 s | Nearby helper's phone: “Someone needs help”, “30 m away” |
 | 47–56 s | Example route with directions and an “On my way” button |
+| 56–66 s | Staged rescue conclusion: “You were saved by Bennet”, followed by a $20 one-time Whop payment prompt |
+
+The closing screen is a checkout design preview. It has no dismissal button in the video, but it does not charge anyone, connect to a Whop merchant account, or confirm a medical diagnosis. It is not implemented in the installed app.
 
 The source clips in `inputs/` are Jack's original recordings. Their audio is never used in the rendered demo; the alarm and notification tones are generated mathematically.
 
@@ -31,7 +34,7 @@ Intermediate frames, generated alarm audio, and preview stills stay in ignored `
 
 ## Verification of the committed export
 
-- 1920 × 1080, H.264, 30 fps, 1,680 frames, exactly 56 seconds.
+- 1920 × 1080, H.264, 30 fps, 1,980 frames, exactly 66 seconds.
 - AAC audio contains only generated alarm/notification tones.
 - Original soundtrack excluded; pre-alarm and post-notification audio are silent.
 - The alarm begins at 12 seconds and ends at 42 seconds, giving the sleeper a full 30-second window.
